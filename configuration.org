@@ -1,0 +1,407 @@
+#+title: Douwe's Nix Configurations
+#+author: Douwe Hoekstra
+
+This file is a literate config using Nix of my computers.
+
+* Flake
+This configuration is flake based.
+#+begin_src nix :tangle flake.nix :noweb yes
+  {
+    description = "Home Manager configuration of douwe";
+
+    inputs = {
+      nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+      <<flake-inputs>>
+    };
+
+    outputs =
+      { nixpkgs, nixos-hardware, home-manager, ... }:
+      let
+        system = "x86_64-linux";
+        lib = nixpkgs.lib;
+        pkgs = nixpkgs.legacyPackages.${system};
+      in
+      {
+        nixosConfigurations = {
+          <<nixos-configs>>
+        };
+        homeConfigurations = {
+          <<home-configs>>
+        };
+      };
+  }
+#+end_src
+
+** NixOS setup
+I load NixOS hardware for laptop specific configuration, so we add this to the flake inputs.
+#+begin_src nix :noweb-ref flake-inputs
+  nixos-hardware = {
+    url = "github:NixOS/nixos-hardware";
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
+#+end_src
+
+Declare my laptop as a NixOS system.
+#+begin_src nix :noweb-ref nixos-configs
+  dlaptop = lib.nixosSystem {
+    system = "x86_64-linux";
+    modules = [ 
+      nixos-hardware.nixosModules.lenovo-ideapad-16ach6
+      ./configuration.nix 
+    ];
+  };
+#+end_src
+
+** Home manager
+For my personal programs and settings, I use home-manager, so we also
+add this to the inputs.
+
+#+begin_src nix :noweb-ref flake-inputs
+  home-manager = {
+    url = "github:nix-community/home-manager";
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
+#+end_src
+
+And we declare a home profile for me.
+#+begin_src nix :noweb-ref home-configs
+  "douwe" = home-manager.lib.homeManagerConfiguration {
+    inherit pkgs;
+    
+    modules = [ ./home.nix ];
+  };
+#+end_src
+
+* NixOS configuration
+#+begin_src nix :tangle configuration.nix
+  # Edit this configuration file to define what should be installed on
+  # your system. Help is available in the configuration.nix(5) man page, on
+  # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
+
+  { config, pkgs, ... }:
+
+  {
+    imports =
+      [ # Include the results of the hardware scan.
+        ./hardware-configuration.nix
+      ];
+
+    # Nix settings
+    nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
+    # Use the systemd-boot EFI boot loader.
+    boot.loader.systemd-boot.enable = true;
+    boot.loader.efi.canTouchEfiVariables = true;
+
+    # Use latest kernel.
+    boot.kernelPackages = pkgs.linuxPackages_latest;
+
+    networking.hostName = "dlaptop"; # Define your hostname.
+    # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+
+    # Configure network proxy if necessary
+    # networking.proxy.default = "http://user:password@proxy:port/";
+    # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
+
+    # Enable networking
+    networking.networkmanager.enable = true;
+
+    # Set your time zone.
+    time.timeZone = "Europe/Amsterdam";
+
+    # Select internationalisation properties.
+    i18n.defaultLocale = "en_US.UTF-8";
+
+    i18n.extraLocaleSettings = {
+      LC_ADDRESS = "nl_NL.UTF-8";
+      LC_IDENTIFICATION = "nl_NL.UTF-8";
+      LC_MEASUREMENT = "nl_NL.UTF-8";
+      LC_MONETARY = "nl_NL.UTF-8";
+      LC_NAME = "nl_NL.UTF-8";
+      LC_NUMERIC = "nl_NL.UTF-8";
+      LC_PAPER = "nl_NL.UTF-8";
+      LC_TELEPHONE = "nl_NL.UTF-8";
+      LC_TIME = "nl_NL.UTF-8";
+    };
+
+    # Enable the GNOME Desktop Environment.
+    services.displayManager.gdm.enable = true;
+    services.desktopManager.gnome.enable = true;
+
+    environment.gnome.excludePackages = with pkgs; [
+      baobab      # disk usage analyzer
+      cheese      # photo booth
+      eog         # image viewer
+      epiphany    # web browser
+      gedit       # text editor
+      simple-scan # document scanner
+      totem       # video player
+      yelp        # help viewer
+      evince      # document viewer
+      file-roller # archive manager
+      geary       # email client
+      seahorse    # password manager
+      decibels
+      snapshot
+      gnome-text-editor
+      gnome-tour
+      gnome-user-docs
+
+      # these should be self explanatory
+      gnome-calculator gnome-calendar gnome-characters gnome-clocks gnome-contacts
+      gnome-font-viewer gnome-logs gnome-maps gnome-music gnome-screenshot
+      gnome-system-monitor gnome-weather gnome-disk-utility gnome-connections
+    ];
+
+    # Configure keymap in X11
+    services.xserver.xkb = {
+      layout = "us";
+      variant = "euro";
+      options = "caps:ctrl_modifier";
+    };
+
+    # Configure console keymap
+    console.keyMap = "us-acentos";
+
+    # Enable CUPS to print documents.
+    services.printing.enable = true;
+
+    # Enable sound with pipewire.
+    services.pulseaudio.enable = false;
+    security.rtkit.enable = true;
+    services.pipewire = {
+      enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      pulse.enable = true;
+      # If you want to use JACK applications, uncomment this
+      # jack.enable = true;
+    };
+
+    # Enable touchpad support (enabled default in most desktopManager).
+    # services.libinput.enable = true;
+
+    # Define a user account. Don't forget to set a password with ‘passwd’.
+    users.users."douwe" = {
+      isNormalUser = true;
+      description = "Douwe Hoekstra";
+      extraGroups = [ "networkmanager" "wheel" ];
+      packages = with pkgs; [
+      #  thunderbird
+      ];
+    };
+
+    # Install firefox.
+    programs.firefox.enable = true;
+
+    # Enable AppImages
+    programs.appimage = {
+      enable = true;
+      binfmt = true;
+    };
+
+    # Allow unfree packages
+    nixpkgs.config.allowUnfree = true;
+
+    # List packages installed in system profile.
+    # You can use https://search.nixos.org/ to find more packages (and options).
+    environment.systemPackages = with pkgs; [
+    #   vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    #   wget
+    ];
+
+    # Some programs need SUID wrappers, can be configured further or are
+    # started in user sessions.
+    # programs.mtr.enable = true;
+    # programs.gnupg.agent = {
+    #   enable = true;
+    #   enableSSHSupport = true;
+    # };
+
+    # List services that you want to enable:
+
+    # Enable the OpenSSH daemon.
+    # services.openssh.enable = true;
+
+    # Open ports in the firewall.
+    # networking.firewall.allowedTCPPorts = [ ... ];
+    # networking.firewall.allowedUDPPorts = [ ... ];
+    # Or disable the firewall altogether.
+    # networking.firewall.enable = false;
+
+    # Copy the NixOS configuration file and link it from the resulting system
+    # (/run/current-system/configuration.nix). This is useful in case you
+    # accidentally delete configuration.nix.
+    # system.copySystemConfiguration = true;
+
+    # This option defines the first version of NixOS you have installed on this particular machine,
+    # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.
+    #
+    # Most users should NEVER change this value after the initial install, for any reason,
+    # even if you've upgraded your system to a new NixOS release.
+    #
+    # This value does NOT affect the Nixpkgs version your packages and OS are pulled from,
+    # so changing it will NOT upgrade your system - see https://nixos.org/manual/nixos/stable/#sec-upgrading for how
+    # to actually do that.
+    #
+    # This value being lower than the current NixOS release does NOT mean your system is
+    # out of date, out of support, or vulnerable.
+    #
+    # Do NOT change this value unless you have manually inspected all the changes it would make to your configuration,
+    # and migrated your data accordingly.
+    #
+    # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
+    system.stateVersion = "26.05"; # Did you read the comment?
+
+  }
+#+end_src
+
+#+begin_src nix :tangle hardware-configuration.nix
+  # Do not modify this file!  It was generated by ‘nixos-generate-config’
+  # and may be overwritten by future invocations.  Please make changes
+  # to /etc/nixos/configuration.nix instead.
+  { config, lib, pkgs, modulesPath, ... }:
+
+  {
+    imports =
+      [ (modulesPath + "/installer/scan/not-detected.nix")
+      ];
+
+    boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" "sdhci_pci" ];
+    boot.initrd.kernelModules = [ ];
+    boot.kernelModules = [ "kvm-amd" ];
+    boot.extraModulePackages = [ ];
+
+    fileSystems."/" =
+      { device = "/dev/disk/by-uuid/674b451a-2051-4f13-b427-bcbc49b4c277";
+        fsType = "btrfs";
+      };
+
+    fileSystems."/home" =
+      { device = "/dev/disk/by-uuid/674b451a-2051-4f13-b427-bcbc49b4c277";
+        fsType = "btrfs";
+        options = [ "subvol=home" ];
+      };
+
+    fileSystems."/nix" =
+      { device = "/dev/disk/by-uuid/674b451a-2051-4f13-b427-bcbc49b4c277";
+        fsType = "btrfs";
+        options = [ "subvol=nix" ];
+      };
+
+    fileSystems."/boot" =
+      { device = "/dev/disk/by-uuid/5122-0BE7";
+        fsType = "vfat";
+        options = [ "fmask=0077" "dmask=0077" ];
+      };
+
+    swapDevices =
+      [ { device = "/dev/disk/by-uuid/57140f82-cf19-4fc8-81bd-e8406cc22de2"; }
+      ];
+
+    nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+    hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  }
+#+end_src
+
+* Home configuration
+#+begin_src nix :tangle home.nix
+  { config, pkgs, ... }:
+
+  {
+    # Home Manager needs a bit of information about you and the paths it should
+    # manage.
+    home.username = "douwe";
+    home.homeDirectory = "/home/douwe";
+
+    # This value determines the Home Manager release that your configuration is
+    # compatible with. This helps avoid breakage when a new Home Manager release
+    # introduces backwards incompatible changes.
+    #
+    # You should not change this value, even if you update Home Manager. If you do
+    # want to update the value, then make sure to first check the Home Manager
+    # release notes.
+    home.stateVersion = "26.05"; # Please read the comment before changing.
+
+    # The home.packages option allows you to install Nix packages into your
+    # environment.
+    home.packages = [
+      # # Adds the 'hello' command to your environment. It prints a friendly
+      # # "Hello, world!" when run.
+      # pkgs.hello
+
+      # # It is sometimes useful to fine-tune packages, for example, by applying
+      # # overrides. You can do that directly here, just don't forget the
+      # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
+      # # fonts?
+      # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
+
+      # # You can also create simple shell scripts directly inside your
+      # # configuration. For example, this adds a command 'my-hello' to your
+      # # environment:
+      # (pkgs.writeShellScriptBin "my-hello" ''
+      #   echo "Hello, ${config.home.username}!"
+      # '')
+      pkgs.elan
+      
+    ];
+
+    # Home Manager is pretty good at managing dotfiles. The primary way to manage
+    # plain files is through 'home.file'.
+    home.file = {
+      # # Building this configuration will create a copy of 'dotfiles/screenrc' in
+      # # the Nix store. Activating the configuration will then make '~/.screenrc' a
+      # # symlink to the Nix store copy.
+      # ".screenrc".source = dotfiles/screenrc;
+
+      # # You can also set the file content immediately.
+      # ".gradle/gradle.properties".text = ''
+      #   org.gradle.console=verbose
+      #   org.gradle.daemon.idletimeout=3600000
+      # '';
+    };
+
+    # Home Manager can also manage your environment variables through
+    # 'home.sessionVariables'. These will be explicitly sourced when using a
+    # shell provided by Home Manager. If you don't want to manage your shell
+    # through Home Manager then you have to manually source 'hm-session-vars.sh'
+    # located at either
+    #
+    #  ~/.nix-profile/etc/profile.d/hm-session-vars.sh
+    #
+    # or
+    #
+    #  ~/.local/state/nix/profiles/profile/etc/profile.d/hm-session-vars.sh
+    #
+    # or
+    #
+    #  /etc/profiles/per-user/douwe/etc/profile.d/hm-session-vars.sh
+    #
+    home.sessionVariables = {
+      # EDITOR = "emacs";
+    };
+
+    programs.git = {
+      enable = true;
+      settings = {
+        user = {
+          name = "Douwe Hoekstra";
+          email = "dev@dhoekstra.xyz";
+        };
+        init.defaultBranch = "main";
+      };
+    };
+    
+    programs.emacs = {
+      enable = true;
+      extraPackages = epkgs: with epkgs; [ nix-mode ];
+    };
+
+    programs.vscodium = {
+      enable = true;
+    };
+    
+    # Let Home Manager install and manage itself.
+    programs.home-manager.enable = true;
+  }
+#+end_src
