@@ -1,6 +1,9 @@
 { config, pkgs, ... }:
 
 {
+  imports = [
+    ./hmModules
+  ];
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "douwe";
@@ -35,7 +38,6 @@
     #   echo "Hello, ${config.home.username}!"
     # '')
     pkgs.elan
-    
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -83,12 +85,9 @@
       init.defaultBranch = "main";
     };
   };
-  
-  programs.emacs = {
-    enable = true;
-    extraPackages = epkgs: with epkgs; [ nix-mode ];
-  };
 
+  my-emacs.enable = true;
+  
   programs.vscodium = {
     enable = true;
   };
