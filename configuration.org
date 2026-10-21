@@ -21,7 +21,7 @@ This configuration is flake based.
       let
         system = "x86_64-linux";
         lib = nixpkgs.lib;
-        pkgs = nixpkgs.legacyPackages.${system};
+        pkgs = import nixpkgs { inherit system; config.allowUnfree = true; };
       in
       {
         nixosConfigurations = {
@@ -349,6 +349,7 @@ And we declare a home profile for me.
       #   echo "Hello, ${config.home.username}!"
       # '')
       pkgs.elan
+      pkgs.zoom-us
     ];
 
     # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -495,10 +496,10 @@ I use the =doom-themes= package for the color themes and the
 #+end_src
 
 **** Completion
-For completion-at-point, I use =corfu= with icons from
-=kind-icon=. For the completion in the minibuffer, I use =vertico=
-with information provided by =marginalia=. I use =orderless= in both
-cases for better sorting. Extra completions are provided by =cape=.
+For completion-at-point, I use =corfu=. For the completion in the
+minibuffer, I use =vertico= with information provided by
+=marginalia=. I use =orderless= in both cases for better
+sorting. Extra completions are provided by =cape=.
 #+begin_src nix :noweb-ref emacs-packages
   orderless corfu vertico marginalia cape kind-icon
 #+end_src
@@ -530,11 +531,6 @@ both and use =C-;= instead for completion.
   (use-package cape
     :init
     (add-hook 'completion-at-point-functions #'cape-file))
-
-  (use-package kind-icon
-    :after corfu
-    :config
-    (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
 #+end_src
 
 And here is the vertico config. Nothing to special about it.

@@ -38,6 +38,7 @@
     #   echo "Hello, ${config.home.username}!"
     # '')
     pkgs.elan
+    pkgs.zoom-us
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage

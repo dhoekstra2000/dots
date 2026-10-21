@@ -66,11 +66,6 @@
 (use-package cape
   :init
   (add-hook 'completion-at-point-functions #'cape-file))
-
-(use-package kind-icon
-  :after corfu
-  :config
-  (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
 (use-package vertico
   :demand t
   :diminish
