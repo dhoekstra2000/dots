@@ -39,7 +39,7 @@
     # '')
     pkgs.elan
     pkgs.zoom-us
-    
+    (pkgs.callPackage ./customPackages/savingfunds.nix {})
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage

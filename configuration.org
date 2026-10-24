@@ -308,7 +308,7 @@ And we declare a home profile for me.
 
 * Home configuration
 ** Base file
-#+begin_src nix :tangle home.nix
+#+begin_src nix :tangle home.nix :noweb yes
   { config, pkgs, ... }:
 
   {
@@ -691,13 +691,13 @@ amount over the different goals.
     pname = "savingfunds";
     version = "0.3.1";
     pyproject = true;
-    src = fetchPypi {
+    src = pkgs.python3Packages.fetchPypi {
       pname = "savingfunds";
       version = "0.3.1";
-      sha256 = "";
+      sha256 = "sha256-4Jdc4sQ0sQg2C8k0bU3fJdttjsojM/mRLrXP8as93+g=";
     };
-    nativeBuildInputs = with python3Packages; [ hatchling ];
-    propagatedBuildInputs = with python3Packages; [
+    nativeBuildInputs = with pkgs.python3Packages; [ hatchling ];
+    propagatedBuildInputs = with pkgs.python3Packages; [
       click
       rich
       pyyaml
@@ -708,6 +708,6 @@ amount over the different goals.
 #+end_src
 
 And we add it to the home packages:
-#+begin_src nix :noweb-ref
+#+begin_src nix :noweb-ref home-packages
   (pkgs.callPackage ./customPackages/savingfunds.nix {})
 #+end_src
