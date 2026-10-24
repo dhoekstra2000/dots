@@ -39,6 +39,7 @@
     # '')
     pkgs.elan
     pkgs.zoom-us
+    
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -74,6 +75,12 @@
   #
   home.sessionVariables = {
     # EDITOR = "emacs";
+  };
+
+  # This hopefully solves the refresh of the apps manu
+  xdg = {
+    enable = true;
+    mime.enable = true;
   };
 
   programs.git = {

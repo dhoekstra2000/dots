@@ -29,6 +29,10 @@
 
   (setq inhibit-startup-screen t)
 
+  (tool-bar-mode -1)
+  (menu-bar-mode -1)
+  (scroll-bar-mode -1)
+
   (let ((backup-dir (expand-file-name "backup/" user-emacs-directory)))
     (unless (file-exists-p backup-dir)
       (make-directory backup-dir))
