@@ -410,10 +410,27 @@ And we declare a home profile for me.
     programs.vscodium = {
       enable = true;
     };
+
+    <<home-settings>>
     
     # Let Home Manager install and manage itself.
     programs.home-manager.enable = true;
   }
+#+end_src
+** Libreoffice
+Install the libreoffice office suite.
+#+begin_src nix :noweb-ref home-settings
+  programs.libreoffice.enable = true;
+#+end_src
+** TeXLive
+Add a full latex installation.
+#+begin_src nix :noweb-ref home-settings
+  programs.texlive = {
+    enable = true;
+    extraPackages = tpkgs: {
+      inherit (tpkgs) scheme-full;
+    };
+  };
 #+end_src
 * Home modules
 ** Default file

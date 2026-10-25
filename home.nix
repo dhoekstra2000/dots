@@ -99,6 +99,14 @@
   programs.vscodium = {
     enable = true;
   };
+
+  programs.libreoffice.enable = true;
+  programs.texlive = {
+    enable = true;
+    extraPackages = tpkgs: {
+      inherit (tpkgs) scheme-full;
+    };
+  };
   
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
