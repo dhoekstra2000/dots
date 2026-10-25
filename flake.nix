@@ -14,7 +14,7 @@
   };
 
   outputs =
-    { nixpkgs, nixos-hardware, home-manager, ... }:
+    inputs@{ nixpkgs, nixos-hardware, home-manager, ... }:
     let
       system = "x86_64-linux";
       lib = nixpkgs.lib;
@@ -26,7 +26,14 @@
           system = "x86_64-linux";
           modules = [ 
             nixos-hardware.nixosModules.lenovo-ideapad-16ach6
-            ./configuration.nix 
+            ./configuration.nix
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.extraSpecialArgs = { inherit inputs; };
+              home-manager.users.douwe = ./home.nix;
+            }
           ];
         };
       };

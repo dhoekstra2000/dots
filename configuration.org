@@ -17,7 +17,7 @@ This configuration is flake based.
     };
 
     outputs =
-      { nixpkgs, nixos-hardware, home-manager, ... }:
+      inputs@{ nixpkgs, nixos-hardware, home-manager, ... }:
       let
         system = "x86_64-linux";
         lib = nixpkgs.lib;
@@ -49,7 +49,14 @@ Declare my laptop as a NixOS system.
     system = "x86_64-linux";
     modules = [ 
       nixos-hardware.nixosModules.lenovo-ideapad-16ach6
-      ./configuration.nix 
+      ./configuration.nix
+      home-manager.nixosModules.home-manager
+      {
+        home-manager.useGlobalPkgs = true;
+        home-manager.useUserPackages = true;
+        home-manager.extraSpecialArgs = { inherit inputs; };
+        home-manager.users.douwe = ./home.nix;
+      }
     ];
   };
 #+end_src
@@ -417,6 +424,11 @@ And we declare a home profile for me.
     programs.home-manager.enable = true;
   }
 #+end_src
+** Extra fonts
+Install Caskaydia and Iosevka fonts.
+#+begin_src nix :noweb-ref home-packages
+  pkgs.iosevka pkgs.cascadia-code
+#+end_src
 ** Libreoffice
 Install the libreoffice office suite.
 #+begin_src nix :noweb-ref home-settings
@@ -495,6 +507,8 @@ having a special folder for backup files.
     (tool-bar-mode -1)
     (menu-bar-mode -1)
     (scroll-bar-mode -1)
+
+    (set-frame-font "Cascadia Code-12")
 
     (let ((backup-dir (expand-file-name "backup/" user-emacs-directory)))
       (unless (file-exists-p backup-dir)

@@ -33,6 +33,8 @@
   (menu-bar-mode -1)
   (scroll-bar-mode -1)
 
+  (set-frame-font "Cascadia Code-12")
+
   (let ((backup-dir (expand-file-name "backup/" user-emacs-directory)))
     (unless (file-exists-p backup-dir)
       (make-directory backup-dir))

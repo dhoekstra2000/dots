@@ -39,6 +39,7 @@
     # '')
     pkgs.elan
     pkgs.zoom-us
+    pkgs.iosevka pkgs.cascadia-code
     (pkgs.callPackage ./customPackages/savingfunds.nix {})
   ];
 
