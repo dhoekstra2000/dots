@@ -1,27 +1,5 @@
-{ pkgs, lib, config, ... }:
-{
-  options = {
-    my-emacs.enable = lib.mkEnableOption "Enable emacs config";
-  };
+;; -*- lexical-binding: t; -*-
 
-  config = lib.mkIf config.my-emacs.enable {
-    programs.emacs = {
-      enable = true;
-      extraPackages = epkgs: with epkgs; [
-        doom-themes doom-modeline
-        orderless corfu vertico marginalia cape kind-icon
-        which-key
-        pdf-tools auctex cdlatex yasnippet
-        magit
-        nix-mode
-      ];
-
-    };
-
-    home.file."emacs-init" = {
-      target = ".emacs.d/init.el";
-      text = ''
-;; -*- lexical-binding: t -*-
 (use-package emacs
   :config
   (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
@@ -39,9 +17,13 @@
     (unless (file-exists-p backup-dir)
       (make-directory backup-dir))
     (setq backup-directory-alist `(("." . ,backup-dir))))
-  
-  (setq auto-save-file-name-transforms
-	`((".*" ,(expand-file-name "auto-save/" user-emacs-directory) t))))
+
+  (let ((auto-save-dir (expand-file-name "auto-save/" user-emacs-directory)))
+    (unless (file-exists-p auto-save-dir)
+      (make-directory auto-save-dir))
+    (setq auto-save-file-name-transforms
+	  `((".*" ,auto-save-dir t)))))
+
 (use-package doom-themes
   :config
   (load-theme 'doom-one t))
@@ -180,7 +162,3 @@
               (bound-and-true-p org-cdlatex-mode))
           (cdlatex-tab)
         (yas-next-field-or-maybe-expand)))))
-'';
-    };
-  };
-}

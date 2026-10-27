@@ -8,36 +8,36 @@
     [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-  boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" "sdhci_pci" ];
+  boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/674b451a-2051-4f13-b427-bcbc49b4c277";
+    { device = "/dev/disk/by-uuid/f6d92725-cbd5-4954-b97a-c37c5f3d0985";
       fsType = "btrfs";
     };
 
   fileSystems."/home" =
-    { device = "/dev/disk/by-uuid/674b451a-2051-4f13-b427-bcbc49b4c277";
+    { device = "/dev/disk/by-uuid/f6d92725-cbd5-4954-b97a-c37c5f3d0985";
       fsType = "btrfs";
       options = [ "subvol=home" ];
     };
 
   fileSystems."/nix" =
-    { device = "/dev/disk/by-uuid/674b451a-2051-4f13-b427-bcbc49b4c277";
+    { device = "/dev/disk/by-uuid/f6d92725-cbd5-4954-b97a-c37c5f3d0985";
       fsType = "btrfs";
       options = [ "subvol=nix" ];
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/5122-0BE7";
+    { device = "/dev/disk/by-uuid/33B5-BF76";
       fsType = "vfat";
       options = [ "fmask=0077" "dmask=0077" ];
     };
 
   swapDevices =
-    [ { device = "/dev/disk/by-uuid/57140f82-cf19-4fc8-81bd-e8406cc22de2"; }
+    [ { device = "/dev/disk/by-uuid/9ed4938a-525f-4138-9fde-f3e047e03fc5"; }
     ];
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
