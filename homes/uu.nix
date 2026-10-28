@@ -60,6 +60,8 @@
     languagePacks = [ "en-GB" "nl" ];
   };
 
+  programs.firefox.enable = true;
+
   programs.sioyek = {
     enable = true;
   };
