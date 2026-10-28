@@ -16,21 +16,26 @@
       lib = nixpkgs.lib;
       pkgs = import nixpkgs { inherit system; config.allowUnfree = true; };
     in
-    {
-      nixosConfigurations = {
-       	ddesktop = lib.nixosSystem {
-  	  system = "x86_64-linux";
-  	  modules = [
-    	    ./configuration.nix
-  	  ];
-	};
-      };
-      homeConfigurations = {
-        "douwe" = home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
-  
-          modules = [ ./home.nix ];
+      {
+        nixosConfigurations = {
+       	  ddesktop = lib.nixosSystem {
+  	        system = "x86_64-linux";
+  	        modules = [
+    	        ./configuration.nix
+  	        ];
+	        };
+        };
+        homeConfigurations = {
+          "douwe@desktop" = home-manager.lib.homeManagerConfiguration {
+            inherit pkgs;
+            
+            modules = [ ./homes/desktop.nix ];
+          };
+          "douwe@uu" = home-manager.lib.homeManagerConfiguration {
+            inherit pkgs;
+            
+            modules = [ ./homes/uu.nix ];
+          };
         };
       };
-    };
 }

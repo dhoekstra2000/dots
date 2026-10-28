@@ -2,12 +2,16 @@
 
 {
   imports = [
-    ./homeModules
+    ../homeModules
   ];
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "douwe";
   home.homeDirectory = "/home/douwe";
+
+  targets.genericLinux.enable = true;
+
+  fonts.fontconfig.enable = true;
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
@@ -23,7 +27,6 @@
   home.packages = [
     pkgs.iosevka
     pkgs.cascadia-code
-    pkgs.hydrapaper
   ];
 
   # This hopefully solves the refresh of the apps manu
@@ -60,7 +63,7 @@
   programs.sioyek = {
     enable = true;
   };
-   
+  
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 }
