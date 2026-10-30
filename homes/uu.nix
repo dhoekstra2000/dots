@@ -27,6 +27,7 @@
   home.packages = [
     pkgs.iosevka
     pkgs.cascadia-code
+    pkgs.papers
   ];
 
   # This hopefully solves the refresh of the apps manu
@@ -61,10 +62,6 @@
   };
 
   programs.firefox.enable = true;
-
-  programs.sioyek = {
-    enable = true;
-  };
 
   programs.vscodium.enable = true;
   
