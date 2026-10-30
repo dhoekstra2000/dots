@@ -112,6 +112,16 @@
 
   (add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer))
 
+(use-package reftex
+  :config
+  (setq reftex-label-alist
+	'(("definition" ?d "def:" "~\\ref{%s}" t ("Definition" "Def.") -2)
+	  ("lemma" ?h "stmt:" "~\\ref{%s}" t ("Lemma" "Lem.") -2)
+	  ("proposition" ?h "stmt:" "~\\ref{%s}" t ("Proposition" "Prop.") -2)
+	  ("theorem" ?h "stmt:" "~\\ref{%s}" t ("Theorem") -2)
+	  ("corollary" ?h "stmt:" "~\\ref{%s}" t ("Corollary" "Cor.") -2))
+	reftex-insert-label-flags '("s" "sfthd")))
+
 (use-package cdlatex
   :hook (LaTeX-mode . cdlatex-mode)
   :bind (:map cdlatex-mode-map
