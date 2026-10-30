@@ -9,19 +9,20 @@
       enable = true;
       extraPackages = epkgs: with epkgs; [
         doom-themes
-	doom-modeline
-	orderless
-	corfu
-	vertico
-	marginalia
-	cape
-	which-key
-	pdf-tools
-	auctex
-	cdlatex
-	yasnippet
-	magit
-	nix-mode
+	      doom-modeline
+	      orderless
+	      corfu
+	      vertico
+	      marginalia
+	      cape
+	      which-key
+	      pdf-tools
+	      auctex
+	      cdlatex
+	      yasnippet
+	      magit
+        git-gutter
+	      nix-mode
       ];
     };
 

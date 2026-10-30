@@ -11,6 +11,9 @@
   (menu-bar-mode -1)
   (scroll-bar-mode -1)
 
+  (setq display-line-numbers-type 'relative)
+  (global-display-line-numbers-mode +1)
+
   (set-frame-font "Cascadia Code-12")
 
   (let ((backup-dir (expand-file-name "backup/" user-emacs-directory)))
@@ -27,9 +30,15 @@
 (use-package doom-themes
   :config
   (load-theme 'doom-one t))
+
 (use-package doom-modeline
   :config
   (doom-modeline-mode t))
+
+(use-package git-gutter
+  :config
+  (global-git-gutter-mode +1))
+
 (use-package corfu
   :demand t
   :hook (after-init . global-corfu-mode)
@@ -54,6 +63,7 @@
 (use-package cape
   :init
   (add-hook 'completion-at-point-functions #'cape-file))
+
 (use-package vertico
   :demand t
   :diminish
@@ -77,12 +87,14 @@
   (marginalia-align 'right)
   :config
   (marginalia-mode t))
+
 (use-package which-key
   :defer 0
   :diminish which-key-mode
   :config
   (which-key-mode)
   (setq which-key-idle-delay 0.5))
+
 (use-package pdf-tools
   :mode ("\\.pdf\\'" . pdf-view-mode))
 
