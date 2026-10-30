@@ -21,7 +21,13 @@
        	  ddesktop = lib.nixosSystem {
   	        system = "x86_64-linux";
   	        modules = [
-    	        ./configuration.nix
+    	        ./hosts/desktop
+  	        ];
+	        };
+          dlaptop = lib.nixosSystem {
+  	        system = "x86_64-linux";
+  	        modules = [
+    	        ./hosts/laptop
   	        ];
 	        };
         };
@@ -31,6 +37,12 @@
             
             modules = [ ./homes/desktop.nix ];
           };
+          "douwe@laptop" = home-manager.lib.homeManagerConfiguration {
+            inherit pkgs;
+            
+            modules = [ ./homes/laptop.nix ];
+          };
+
           "douwe@uu" = home-manager.lib.homeManagerConfiguration {
             inherit pkgs;
             
