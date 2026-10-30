@@ -28,6 +28,7 @@
     pkgs.iosevka
     pkgs.cascadia-code
     pkgs.papers
+    pkgs.showtime
   ];
 
   # This hopefully solves the refresh of the apps manu
