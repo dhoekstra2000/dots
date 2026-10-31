@@ -37,6 +37,7 @@
 
 (use-package git-gutter
   :config
+  (setq git-gutter:update-interval 0.02)
   (global-git-gutter-mode +1))
 
 (use-package corfu
