@@ -41,6 +41,7 @@
     pkgs.zoom-us
     pkgs.iosevka pkgs.cascadia-code
     (pkgs.callPackage ../customPackages/savingfunds.nix {})
+    pkgs.bitwarden-desktop
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
