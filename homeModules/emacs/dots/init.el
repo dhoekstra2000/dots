@@ -96,7 +96,9 @@
   (setq which-key-idle-delay 0.5))
 
 (use-package pdf-tools
-  :mode ("\\.pdf\\'" . pdf-view-mode))
+  :mode ("\\.pdf\\'" . pdf-view-mode)
+  :hook (pdf-view-mode . (lambda ()
+			   (display-line-numbers-mode -1))))
 
 (use-package auctex
   :hook ((LaTeX-mode . TeX-fold-mode)
