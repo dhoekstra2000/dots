@@ -24,6 +24,7 @@
     pkgs.iosevka pkgs.cascadia-code
     (pkgs.callPackage ../customPackages/savingfunds.nix {})
     pkgs.bitwarden-desktop
+    pkgs.inkscape
   ];
 
   # This hopefully solves the refresh of the apps manu
@@ -61,7 +62,6 @@
     enable = true;
     languagePacks = [ "en-GB" "nl" ];
   };
-
   
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
