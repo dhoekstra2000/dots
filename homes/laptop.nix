@@ -25,6 +25,7 @@
     (pkgs.callPackage ../customPackages/savingfunds.nix {})
     pkgs.bitwarden-desktop
     pkgs.inkscape
+    pkgs.gnumake
   ];
 
   # This hopefully solves the refresh of the apps manu
@@ -61,6 +62,16 @@
   programs.thunderbird = {
     enable = true;
     languagePacks = [ "en-GB" "nl" ];
+  };
+
+  programs.devenv = {
+    enable = true;
+    enableBashIntegration = true;
+  };
+  
+  programs.direnv = {
+    enable = true;
+    enableBashIntegration = true;
   };
   
   # Let Home Manager install and manage itself.
