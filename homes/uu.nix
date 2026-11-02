@@ -30,6 +30,7 @@
     pkgs.papers
     pkgs.showtime
     pkgs.masterpdfeditor
+    pkgs.inkscape
   ];
 
   # This hopefully solves the refresh of the apps manu
