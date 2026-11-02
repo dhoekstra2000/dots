@@ -110,6 +110,9 @@
   :config
   (marginalia-mode t))
 
+(use-package consult
+  :bind (("C-x b" . consult-buffer)))
+
 (use-package which-key
   :defer 0
   :diminish which-key-mode

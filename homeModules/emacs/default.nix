@@ -14,6 +14,7 @@
 	      corfu
 	      vertico
 	      marginalia
+        consult
 	      cape
 	      which-key
 	      pdf-tools
