@@ -23,6 +23,7 @@
 	      magit
         git-gutter
 	      nix-mode
+        projectile
       ];
     };
 

@@ -27,6 +27,12 @@
     (setq auto-save-file-name-transforms
 	  `((".*" ,auto-save-dir t)))))
 
+(use-package recentf
+  :init
+  (recentf-mode t)
+  :config
+  (setq recentf-max-saved-items 50))
+
 (use-package doom-themes
   :config
   (load-theme 'doom-one t))
@@ -39,6 +45,12 @@
   :config
   (setq git-gutter:update-interval 0.02)
   (global-git-gutter-mode +1))
+
+(use-package projectile
+  :init
+  (projectile-mode +1)
+  :bind (:map projectile-mode-map
+	      ("C-c p" . projectile-command-map)))
 
 (use-package corfu
   :demand t
