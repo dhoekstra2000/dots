@@ -29,6 +29,7 @@
     pkgs.cascadia-code
     pkgs.papers
     pkgs.showtime
+    pkgs.masterpdfeditor
   ];
 
   # This hopefully solves the refresh of the apps manu
