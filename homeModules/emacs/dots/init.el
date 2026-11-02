@@ -30,6 +30,7 @@
 (use-package recentf
   :init
   (recentf-mode t)
+  :bind (("C-x C-r" . recentf-open))
   :config
   (setq recentf-max-saved-items 50))
 
