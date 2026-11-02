@@ -53,6 +53,14 @@
   :bind (:map projectile-mode-map
 	      ("C-c p" . projectile-command-map)))
 
+(use-package orderless
+  :custom
+  (orderless-matching-styles '(orderless-prefixes))
+  (completion-ignore-case t)
+  :config
+  (setq completion-styles '(basic substring initials orderless)
+	completion-category-overrides '((file (styles basic partial-completion)))))
+
 (use-package corfu
   :demand t
   :hook (after-init . global-corfu-mode)
