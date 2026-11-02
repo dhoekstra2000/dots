@@ -139,7 +139,8 @@
 	reftex-insert-label-flags '("s" "sfthd")))
 
 (use-package cdlatex
-  :hook (LaTeX-mode . cdlatex-mode)
+  :hook ((LaTeX-mode . cdlatex-mode)
+	 (org-mode . org-cdlatex-mode))
   :bind (:map cdlatex-mode-map
 	      ("<tab>" . cdlatex-tab))
   :config
