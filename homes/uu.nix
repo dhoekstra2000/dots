@@ -29,7 +29,7 @@
     pkgs.cascadia-code
     pkgs.papers
     pkgs.showtime
-    pkgs.masterpdfeditor
+    pkgs.pdf4qt
     pkgs.inkscape
   ];
 
