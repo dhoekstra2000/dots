@@ -212,3 +212,17 @@
               (bound-and-true-p org-cdlatex-mode))
           (cdlatex-tab)
         (yas-next-field-or-maybe-expand)))))
+
+(use-package org-mode
+  :custom
+  (org-directory (file-truename "~/kDrive/Org/"))
+  (org-agenda-files `(,org-directory))
+  :bind
+  (("C-c a" . org-agenda)
+   ("C-c c" . org-capture)))
+
+(use-package org-roam
+  :custom
+  (org-roam-directory (file-truename "~/kDrive/Org/Roam/"))
+  :bind
+  ("C-c n n" . org-roam-dailies-capture-today))

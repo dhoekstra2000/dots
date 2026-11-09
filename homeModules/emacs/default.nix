@@ -5,6 +5,11 @@
   };
 
   config = lib.mkIf config.my-emacs.enable {
+    home.packages = with pkgs; [
+      imagemagick
+      sqlite
+    ];
+    
     programs.emacs = {
       enable = true;
       extraPackages = epkgs: with epkgs; [
@@ -25,6 +30,7 @@
         git-gutter
 	      nix-mode
         projectile
+        org-roam
       ];
     };
 
