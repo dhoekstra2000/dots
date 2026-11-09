@@ -31,6 +31,7 @@
 	      nix-mode
         projectile
         org-roam
+        citar
       ];
     };
 

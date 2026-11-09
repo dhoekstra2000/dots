@@ -149,6 +149,11 @@
 	  ("corollary" ?h "stmt:" "~\\ref{%s}" t ("Corollary" "Cor.") -2))
 	reftex-insert-label-flags '("s" "sfthd")))
 
+(use-package citar
+  :hook
+  (LaTeX-mode . citar-capf-setup)
+  (org-mode . citar-capf-mode))
+
 (use-package cdlatex
   :hook ((LaTeX-mode . cdlatex-mode)
 	 (org-mode . org-cdlatex-mode))
