@@ -217,6 +217,8 @@
   :custom
   (org-directory (file-truename "~/kDrive/Org/"))
   (org-agenda-files `(,org-directory))
+  (org-capture-templates
+   '(("q" "Question" entry (file "questions.org") "%?\n")))
   :bind
   (("C-c a" . org-agenda)
    ("C-c c" . org-capture)))
