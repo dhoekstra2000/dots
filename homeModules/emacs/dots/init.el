@@ -14,7 +14,15 @@
   (setq display-line-numbers-type 'relative)
   (global-display-line-numbers-mode +1)
 
-  (set-frame-font "Cascadia Code-12")
+  (defun my/set-font-faces ()
+    (set-face-attribute 'default nil :font "Cascadia Code" :height 120))
+
+  (if (daemonp)
+      (add-hook 'after-make-frame-functions
+		(lambda (frame)
+		  (with-selected-frame frame
+		    (my/set-font-faces))))
+    (my/set-font-faces))
 
   (let ((backup-dir (expand-file-name "backup/" user-emacs-directory)))
     (unless (file-exists-p backup-dir)
