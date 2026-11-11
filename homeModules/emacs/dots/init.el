@@ -122,21 +122,21 @@
 
 (use-package pdf-tools
   :mode ("\\.pdf\\'" . pdf-view-mode)
-  :hook (pdf-view-mode . (lambda ()
-			   (display-line-numbers-mode -1))))
+  :hook ((pdf-view-mode . (lambda ()
+			    (display-line-numbers-mode -1)))
+	 (pdf-view-mode . pdf-sync-minor-mode)))
 
 (use-package auctex
   :hook ((LaTeX-mode . TeX-fold-mode)
 	 (LaTeX-mode . turn-on-reftex))
-  :custom
-  (TeX-source-correlate-mode t)
   :config
   (setq TeX-auto-save t)
   (setq TeX-parse-self t)
   (setq-default TeX-master nil)
   (setq TeX-view-program-selection '((output-pdf "PDF Tools"))
+	TeX-source-correlate-mode t
 	TeX-source-correlate-start-server t)
-
+  
   (add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer))
 
 (use-package reftex
@@ -148,6 +148,14 @@
 	  ("theorem" ?h "stmt:" "~\\ref{%s}" t ("Theorem") -2)
 	  ("corollary" ?h "stmt:" "~\\ref{%s}" t ("Corollary" "Cor.") -2))
 	reftex-insert-label-flags '("s" "sfthd")))
+
+(use-package citar
+  :defer t
+  :custom
+  (citar-bibliography '("~/kDrive/Library/biblio.bib"))
+  :bind
+  (("C-c w b o" . citar-open)
+   ("C-c w b c" . citar-insert-citation)))
 
 (use-package cdlatex
   :hook ((LaTeX-mode . cdlatex-mode)
