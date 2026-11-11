@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   imports = [
@@ -22,6 +22,14 @@
   # release notes.
   home.stateVersion = "26.05"; # Please read the comment before changing.
 
+  nixpkgs.config.permittedInsecurePackages = [
+    "firefox-esr-140-bin-unwrapped-140.17.0esr"
+  ];
+
+  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+    "firefox-esr-140-bin-unwrapped"
+  ];
+  
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = [
@@ -31,6 +39,7 @@
     pkgs.showtime
     pkgs.pdf4qt
     pkgs.inkscape
+    pkgs.zotero
   ];
 
   # This hopefully solves the refresh of the apps manu
