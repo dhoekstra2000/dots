@@ -132,7 +132,10 @@
   :mode ("\\.pdf\\'" . pdf-view-mode)
   :hook ((pdf-view-mode . (lambda ()
 			    (display-line-numbers-mode -1)))
-	 (pdf-view-mode . pdf-sync-minor-mode)))
+	 (pdf-view-mode . pdf-sync-minor-mode))
+  :bind
+  (:map pdf-view-mode-map
+	("o" . pdf-outline)))
 
 (use-package auctex
   :hook ((LaTeX-mode . TeX-fold-mode)
