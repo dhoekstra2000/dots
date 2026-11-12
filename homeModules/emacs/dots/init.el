@@ -145,8 +145,7 @@
   (setq TeX-parse-self t)
   (setq-default TeX-master nil)
   (setq TeX-view-program-selection '((output-pdf "PDF Tools"))
-	TeX-source-correlate-mode t
-	TeX-source-correlate-start-server t)
+	TeX-source-correlate-mode t)
   
   (add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer))
 
