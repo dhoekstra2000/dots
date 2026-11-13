@@ -26,7 +26,6 @@
     pkgs.bitwarden-desktop
     pkgs.inkscape
     pkgs.gnumake
-    (pkgs.whisperx.override { config.cudaSupport = true; })
   ];
 
   # This hopefully solves the refresh of the apps manu
@@ -42,6 +41,7 @@
         name = "Douwe Hoekstra";
         email = "dev@dhoekstra.xyz";
       };
+      pull.rebase = true;
       init.defaultBranch = "main";
     };
   };
