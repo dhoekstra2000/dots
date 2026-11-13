@@ -7,10 +7,14 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixos-hardware = {
+      url = "github:NixOS/nixos-hardware";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
-    inputs@{ nixpkgs, home-manager, ... }:
+    inputs@{ nixpkgs, home-manager, nixos-hardware, ... }:
     let
       system = "x86_64-linux";
       lib = nixpkgs.lib;
@@ -28,6 +32,7 @@
   	        system = "x86_64-linux";
   	        modules = [
     	        ./hosts/laptop
+              nixos-hardware.nixosModules.lenovo-ideapad-16ach6
   	        ];
 	        };
         };
