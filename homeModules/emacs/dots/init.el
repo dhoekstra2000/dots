@@ -197,7 +197,12 @@
 (use-package ebib
   :custom
   (ebib-bibtex-dialect 'biblatex)
-  :bind ("C-c w b e" . ebib))
+  (ebib-file-search-dirs '("~/kDrive/Library/files"))
+  (ebib-bib-search-dirs '("~/kDrive/Library"))
+  :bind ("C-c w b e" . ebib)
+  :config
+  (setq ebib-file-associations
+	'(("pdf" . find-file))))
 
 (use-package cdlatex
   :hook ((LaTeX-mode . cdlatex-mode)
