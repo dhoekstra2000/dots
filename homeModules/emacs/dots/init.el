@@ -191,6 +191,7 @@
 	bibtex-autokey-names-stretch 1
 	bibtex-autokey-additional-names "EtAl"
 	bibtex-autokey-name-case-convert-function #'capitalize
+	bibtex-autokey-year-title-separator ":"
 	bibtex-autokey-titleword-separator "-"))
 
 (use-package ebib
