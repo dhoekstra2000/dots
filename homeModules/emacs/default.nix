@@ -15,6 +15,9 @@
       extraPackages = epkgs: with epkgs; [
         doom-themes
 	      doom-modeline
+        evil
+        evil-collection
+        evil-escape
 	      orderless
 	      corfu
 	      vertico

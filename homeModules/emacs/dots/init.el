@@ -50,6 +50,24 @@
   :config
   (doom-modeline-mode t))
 
+(use-package evil
+  :init
+  (setq evil-want-integration t
+	evil-want-keybinding nil)
+  :config
+  (evil-mode 1))
+
+(use-package evil-collection
+  :after evil
+  :config
+  (evil-collection-init))
+
+(use-package evil-escape
+  :after evil
+  :config
+  (setq evil-escape-key-sequence "df")
+  (evil-escape-mode))
+
 (use-package git-gutter
   :config
   (setq git-gutter:update-interval 0.02)
@@ -80,7 +98,7 @@
   (corfu-quit-at-boundary 'separator)
   (corfu-on-exact-match 'show)
   :bind
-  (("C-;" . completion-at-point))
+  (("C-l" . completion-at-point))
   :config
   (keymap-unset corfu-map "TAB")
   (keymap-unset corfu-map "RET")
