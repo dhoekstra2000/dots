@@ -185,6 +185,19 @@
   (("C-c w b o" . citar-open)
    ("C-c w b c" . citar-insert-citation)))
 
+(use-package bibtex
+  :init
+  (setq bibtex-autokey-names 3
+	bibtex-autokey-names-stretch 1
+	bibtex-autokey-additional-names "EtAl"
+	bibtex-autokey-name-case-convert-function #'capitalize
+	bibtex-autokey-titleword-separator "-"))
+
+(use-package ebib
+  :custom
+  (ebib-bibtex-dialect 'biblatex)
+  :bind ("C-c w b e" . ebib))
+
 (use-package cdlatex
   :hook ((LaTeX-mode . cdlatex-mode)
 	 (org-mode . org-cdlatex-mode))

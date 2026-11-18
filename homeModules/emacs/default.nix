@@ -36,6 +36,8 @@
         org-roam
         org-noter
         citar
+        ebib
+        biblio
       ];
     };
 
