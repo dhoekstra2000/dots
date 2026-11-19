@@ -187,7 +187,8 @@
 
 (use-package bibtex
   :init
-  (setq bibtex-autokey-names 3
+  (setq bibtex-dialect 'biblatex
+	bibtex-autokey-names 3
 	bibtex-autokey-names-stretch 1
 	bibtex-autokey-additional-names "EtAl"
 	bibtex-autokey-name-case-convert-function #'capitalize
@@ -199,10 +200,19 @@
   (ebib-bibtex-dialect 'biblatex)
   (ebib-file-search-dirs '("~/kDrive/Library/files"))
   (ebib-bib-search-dirs '("~/kDrive/Library"))
-  :bind ("C-c w b e" . ebib)
+  :bind (("C-c w b e" . ebib)
+	 :map ebib-index-mode-map
+	 ("i" . ebib-import-file))
   :config
   (setq ebib-file-associations
-	'(("pdf" . find-file))))
+	'(("pdf" . find-file) ("djvu" . find-file))))
+
+(use-package biblio
+  :bind
+  ("C-c w b b" . biblio-lookup)
+  :init
+  (setq biblio-crossref-user-email-address "d.hoekstra@uu.nl"
+	biblio-bibtex-use-autokey t))
 
 (use-package cdlatex
   :hook ((LaTeX-mode . cdlatex-mode)
