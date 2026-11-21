@@ -182,7 +182,7 @@
   :custom
   (citar-bibliography '("~/kDrive/Library/biblio.bib"))
   :bind
-  (("C-c w b o" . citar-open)
+  (("C-c w b o" . citar-open-files)
    ("C-c w b c" . citar-insert-citation)))
 
 (use-package bibtex
