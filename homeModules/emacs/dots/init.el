@@ -242,7 +242,7 @@
       (message "Added attachment for %s: %s" key destination))))
   :bind
   (:map bibtex-mode-map
-	("C-c C-f" . my/bibtex-add-file)))
+	("C-c b f" . my/bibtex-add-file)))
 
 (use-package ebib
   :custom
