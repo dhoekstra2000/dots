@@ -26,6 +26,7 @@
     pkgs.bitwarden-desktop
     pkgs.inkscape
     pkgs.gnumake
+    pkgs.bottles
   ];
 
   # This hopefully solves the refresh of the apps manu
