@@ -193,7 +193,56 @@
 	bibtex-autokey-additional-names "EtAl"
 	bibtex-autokey-name-case-convert-function #'capitalize
 	bibtex-autokey-year-title-separator ":"
-	bibtex-autokey-titleword-separator "-"))
+	bibtex-autokey-titleword-separator "-")
+
+  (defvar my/bibtex-attachment-directory
+    (expand-file-name "~/kDrive/Library/files/"))
+  (defvar my/bibtex-relative-attachment-path
+    "files/")
+
+  (defun my/bibtex-add-file ()
+    "Prompt for file name to add to entry. Move it to a specific folder"
+    (interactive)
+    (unless (derived-mode-p 'bibtex-mode)
+      (user-error "This only works in bibtex-mode"))
+
+    (save-excursion
+      (bibtex-beginning-of-entry)
+
+      (let* ((entry (bibtex-parse-entry))
+	     (key (cdr (assoc "=key=" entry)))
+	     (source (read-file-name "Select attachment: "))
+	     (extension (or (file-name-extension source) ""))
+	     (filename (if (string-empty-p extension)
+			   key
+			 (concat key "." extension)))
+	     (destination-directory
+	      (expand-file-name my/bibtex-attachment-directory))
+	     (destination
+	      (expand-file-name filename destination-directory))
+	     (file-field
+	      (concat my/bibtex-relative-attachment-path filename)))
+
+	(unless key
+	  (user-error "Could not determine BibLaTeX entry key"))
+
+	(unless (file-directory-p destination-directory)
+	  (user-error "Destination directory does not exist"))
+
+	(when (file-exists-p destination)
+          (unless (yes-or-no-p
+                   (format "File %s already exists. Overwrite? " destination))
+            (user-error "Attachment operation cancelled")))
+
+	(rename-file source destination t)
+
+	(bibtex-make-field "file" t t)
+	(insert file-field)
+
+      (message "Added attachment for %s: %s" key destination))))
+  :bind
+  (:map bibtex-mode-map
+	("C-c C-f" . my/bibtex-add-file)))
 
 (use-package ebib
   :custom
