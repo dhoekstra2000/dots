@@ -244,18 +244,6 @@
   (:map bibtex-mode-map
 	("C-c b f" . my/bibtex-add-file)))
 
-(use-package ebib
-  :custom
-  (ebib-bibtex-dialect 'biblatex)
-  (ebib-file-search-dirs '("~/kDrive/Library/files"))
-  (ebib-bib-search-dirs '("~/kDrive/Library"))
-  :bind (("C-c w b e" . ebib)
-	 :map ebib-index-mode-map
-	 ("i" . ebib-import-file))
-  :config
-  (setq ebib-file-associations
-	'(("pdf" . find-file) ("djvu" . find-file))))
-
 (use-package biblio
   :bind
   ("C-c w b b" . biblio-lookup)
