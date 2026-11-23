@@ -70,7 +70,7 @@
 (use-package evil-escape
   :after evil
   :config
-  (setq evil-escape-key-sequence ";;;")
+  (setq evil-escape-key-sequence "asfd")
   (evil-escape-mode))
 
 (use-package git-gutter
