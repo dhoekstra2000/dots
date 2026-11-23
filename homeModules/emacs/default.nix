@@ -48,6 +48,8 @@
 
     services.emacs = {
       enable = true;
+      startWithUserSession = "graphical";
+      client.enable = true;
     };
   };
 }

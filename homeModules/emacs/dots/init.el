@@ -18,9 +18,6 @@
 
   (add-to-list 'default-frame-alist '(fullscreen . maximized))
   (add-to-list 'default-frame-alist '(auto-raise . t))
-  (add-hook 'server-after-make-frame-hook
-            (lambda ()
-	      (select-frame-set-input-focus (selected-frame))))
 
   (defun my/set-font-faces ()
     (set-face-attribute 'default nil :font "Cascadia Code" :height 120))
