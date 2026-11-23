@@ -46,5 +46,9 @@
       recursive = true;
       source = ./dots;
     };
+
+    services.emacs = {
+      enable = true;
+    };
   };
 }
