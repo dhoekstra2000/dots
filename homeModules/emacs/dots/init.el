@@ -154,7 +154,8 @@
 (use-package pdf-tools
   :mode ("\\.pdf\\'" . pdf-view-mode)
   :hook ((pdf-view-mode . (lambda ()
-			    (display-line-numbers-mode -1)))
+			    (display-line-numbers-mode -1)
+			    (blink-cursor-mode -1)))
 	 (pdf-view-mode . pdf-sync-minor-mode))
   :bind
   (:map pdf-view-mode-map
