@@ -337,4 +337,9 @@
   :custom
   (org-roam-directory (file-truename "~/kDrive/Org/Roam/"))
   :bind
-  ("C-c n n" . org-roam-dailies-capture-today))
+  (("C-c n n" . org-roam-dailies-capture-today)
+   ("C-c n l" . org-roam-buffer-toggle)
+   ("C-c n f" . org-roam-node-find)
+   ("C-c n i" . org-roam-node-insert))
+  :config
+  (org-roam-db-autosync-mode))
