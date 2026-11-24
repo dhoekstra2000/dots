@@ -24,6 +24,7 @@
     pkgs.iosevka
     pkgs.cascadia-code
     pkgs.hydrapaper
+    pkgs.tor-browser
   ];
 
   # This hopefully solves the refresh of the apps manu

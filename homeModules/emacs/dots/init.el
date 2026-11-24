@@ -330,7 +330,9 @@
    '(("q" "Question" entry (file "questions.org") "%?\n")))
   :bind
   (("C-c a" . org-agenda)
-   ("C-c c" . org-capture)))
+   ("C-c c" . org-capture))
+  :config
+  (setq org-cite-global-bibliography "~/kDrive/Library/biblio.bib"))
 
 (use-package org-roam
   :custom
