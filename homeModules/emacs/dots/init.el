@@ -199,7 +199,8 @@
 	bibtex-autokey-additional-names "EtAl"
 	bibtex-autokey-name-case-convert-function #'capitalize
 	bibtex-autokey-year-title-separator ":"
-	bibtex-autokey-titleword-separator "-")
+	bibtex-autokey-titleword-separator "-"
+	bibtex-dialect 'biblatex)
 
   (defvar my/bibtex-attachment-directory
     (expand-file-name "~/kDrive/Library/files/"))
