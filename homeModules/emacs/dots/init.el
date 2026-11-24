@@ -70,7 +70,7 @@
 (use-package evil-escape
   :after evil
   :config
-  (setq evil-escape-key-sequence "asfd")
+  (setq evil-escape-key-sequence "fj")
   (evil-escape-mode))
 
 (use-package git-gutter
@@ -326,14 +326,13 @@
   :custom
   (org-directory (file-truename "~/kDrive/Org/"))
   (org-agenda-files `(,org-directory))
+  (org-cite-global-bibliography `(,(file-truename "~/kDrive/Library/biblio.bib")))
   (org-capture-templates
    '(("q" "Question" entry (file "questions.org") "%?\n")))
   :bind
   (("C-c a" . org-agenda)
-   ("C-c c" . org-capture))
-  :config
-  (setq org-cite-global-bibliography "~/kDrive/Library/biblio.bib"))
-
+   ("C-c c" . org-capture)))
+  
 (use-package org-roam
   :custom
   (org-roam-directory (file-truename "~/kDrive/Org/Roam/"))
