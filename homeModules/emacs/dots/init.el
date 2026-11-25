@@ -342,4 +342,39 @@
    ("C-c n f" . org-roam-node-find)
    ("C-c n i" . org-roam-node-insert))
   :config
+  (setq org-roam-capture-templates
+	'(("m" "main" plain
+	   "%?"
+	   :if-new (file+head "main/%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+	   :immediate-finish t
+	   :unnarrowed t)
+	  ("r" "reference" plain "%?"
+	   :if-new (file+head
+		    "reference/${citar-citekey}.org" "#+title: ${title}\n")
+	   :immediate-finish t
+	   :unnarrowed t)))
+
+  (cl-defmethod org-roam-node-type ((node org-roam-node))
+    "Return TYPE of NODE."
+    (condition-case nil
+	(file-name-nondirectory
+	 (directory-file-name
+	  (file-name-directory
+	   (file-relative-name (org-roam-node-file node) org-roam-directory))))
+      (error "")))
+
+  (setq org-roam-node-display-template
+	(concat "${type:15} ${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
+
+  (defun douwe/tag-new-node-as-draft ()
+    (org-roam-tag-add '("draft")))
+  (add-hook 'org-roam-capture-new-node-hook #'douwe/tag-new-node-as-draft)
+
   (org-roam-db-autosync-mode))
+
+(use-package citar-org-roam
+  :after (citar org-roam)
+  :config
+  (setq citar-org-roam-note-title-template "${author editor} - ${title}")
+  (setq citar-org-roam-capture-template-key "r")
+  (citar-org-roam-mode))

@@ -36,6 +36,7 @@
         org-roam
         org-noter
         citar
+        citar-org-roam
         biblio
       ];
     };
