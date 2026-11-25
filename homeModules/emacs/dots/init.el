@@ -189,6 +189,8 @@
   (citar-bibliography '("~/kDrive/Library/biblio.bib"))
   :bind
   (("C-c w b o" . citar-open-files)
+   ("C-c w b O" . citar-open)
+   ("C-c w b n" . citar-open-notes)
    ("C-c w b c" . citar-insert-citation)))
 
 (use-package bibtex
@@ -340,6 +342,7 @@
   (("C-c n n" . org-roam-dailies-capture-today)
    ("C-c n l" . org-roam-buffer-toggle)
    ("C-c n f" . org-roam-node-find)
+   ("C-c n c" . org-roam-capture)
    ("C-c n i" . org-roam-node-insert))
   :config
   (setq org-roam-capture-templates
