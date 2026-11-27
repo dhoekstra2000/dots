@@ -78,6 +78,8 @@
   programs.vscodium.enable = true;
 
   programs.libreoffice.enable = true;
+
+  programs.devenv.enable = true;
   
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
