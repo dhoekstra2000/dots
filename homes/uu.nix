@@ -39,7 +39,7 @@
     pkgs.showtime
     pkgs.pdf4qt
     pkgs.inkscape
-    pkgs.zotero
+    pkgs.tor-browser
   ];
 
   # This hopefully solves the refresh of the apps manu
